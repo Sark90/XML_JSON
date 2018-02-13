@@ -42,7 +42,7 @@ public class RWObjDemo {
             e.printStackTrace();
         } catch (EOFException e) {
             System.out.println("EOF");
-        }catch (StreamCorruptedException e) {
+        } catch (StreamCorruptedException e) {
             System.err.println(e);
         } catch (IOException e) {
             e.printStackTrace();

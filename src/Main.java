@@ -4,9 +4,9 @@ public class Main {
         Flower pink = new Flower("pink", "purple", 18);
         Flower tulip = new Flower("tulip", "yellow", 23);
 
-        RWObjDemo rw = new RWObjDemo();
+        /*RWObjDemo rw = new RWObjDemo();
         rw.write(rose, pink);
         rw.write(tulip);
-        rw.read();
+        rw.read();*/
     }
 }
