@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE prices>
+<prices>
+	<price flowername="tulip" color="yellow">23.0</price>
+	<price flowername="rose" color="red">40.0</price>
+</prices>
