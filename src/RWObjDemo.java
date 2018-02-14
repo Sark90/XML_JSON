@@ -1,6 +1,6 @@
 import java.io.*;
 
-public class RWObjDemo {
+public class RWObjDemo extends ObjectOutputStream.PutField {    //
     private FileInputStream fis;
     private FileOutputStream fos;
     private ObjectOutputStream oos;
@@ -55,5 +55,55 @@ public class RWObjDemo {
                 e.printStackTrace();
             }
         }
+    }
+
+    @Override
+    public void put(String name, boolean val) {
+
+    }
+
+    @Override
+    public void put(String name, byte val) {
+
+    }
+
+    @Override
+    public void put(String name, char val) {
+
+    }
+
+    @Override
+    public void put(String name, short val) {
+
+    }
+
+    @Override
+    public void put(String name, int val) {
+
+    }
+
+    @Override
+    public void put(String name, long val) {
+
+    }
+
+    @Override
+    public void put(String name, float val) {
+
+    }
+
+    @Override
+    public void put(String name, double val) {
+
+    }
+
+    @Override
+    public void put(String name, Object val) {
+
+    }
+
+    @Override
+    public void write(ObjectOutput out) throws IOException {
+
     }
 }

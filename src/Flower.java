@@ -1,6 +1,9 @@
-import java.io.Serializable;
+import java.io.Externalizable;
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
 
-public class Flower /*implements Serializable*/ {
+public class Flower implements Externalizable/*Serializable*/ {
     private String name, color;
     private double price;
 
@@ -32,5 +35,15 @@ public class Flower /*implements Serializable*/ {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    @Override
+    public void writeExternal(ObjectOutput out) throws IOException {
+        new RWObjDemo().write(this);
+    }
+
+    @Override
+    public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
+        new RWObjDemo().read();
     }
 }
