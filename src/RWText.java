@@ -134,13 +134,13 @@ public class RWText {
             System.out.println("Array not initialized!");
             return 0;
         }
-        double p = -1;
+        double p = 0;
         for(Flower f: flowers) {
             if(f.getName().equals(name) && f.getColor().equals(color)) {
                 p = f.getPrice();
             }
         }
-        if (p == -1) {
+        if (p == 0) {
             System.out.print("flower not found, ");
         }
         return p;
