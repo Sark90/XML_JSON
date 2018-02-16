@@ -7,13 +7,19 @@ import java.util.List;
 
 public class RWText {
     private static final String XML_FILE = "prices.xml";
+    private static final String XML_NAME_PAR = "flowername=\"";
+    private static final String XML_COLOR_PAR = "\" color=\"";
+    private static final String XML_PRICE_PAR = "\">";
+    private static final String XML_PRICE_PAR_END = "</price>";
+    private static final int XML_NUM_SERV_REC = 4;
+
     private static final String JSON_FILE = "prices.json";
-    private static final String NAME_PAR_XML = "flowername=\"";
-    private static final String COLOR_PAR_XML = "\" color=\"";
-    private static final String PRICE_PAR_XML = "\">";
-    private static final String NAME_PAR_JSON = "\t\t\"name\": \"";
-    private static final String COLOR_PAR_JSON = "\t\t\"color\": \"";
-    private static final String PRICE_PAR_JSON = "\t\t\"price\": \"";
+    private static final String JSON_NAME_PAR = "\t\t\"name\": \"";
+    private static final String JSON_COLOR_PAR = "\t\t\"color\": \"";
+    private static final String JSON_PRICE_PAR = "\t\t\"price\": \"";
+    private static final int JSON_INDEX_DELTA = 2;
+    private static final int JSON_LAST_INDEX_DELTA = 1;
+
     private Flower[] flowers;
     private String name, color;
     private double price;
@@ -24,8 +30,8 @@ public class RWText {
             pw.println("<!DOCTYPE prices>");
             pw.println("<prices>");
             for (Flower f : flowers) {
-                pw.print("\t<price " + NAME_PAR_XML + f.getName() + COLOR_PAR_XML + f.getColor() + "\">");
-                pw.println(f.getPrice() + "</price>");
+                pw.print("\t<price " + XML_NAME_PAR + f.getName() + XML_COLOR_PAR + f.getColor() + "\">");
+                pw.println(f.getPrice() + XML_PRICE_PAR_END);
             }
             pw.println("</prices>");
         } catch (FileNotFoundException e) {
@@ -43,9 +49,9 @@ public class RWText {
                 pw.println("{");
                 for (int i = 0; i < flowers.length; i++) {
                     pw.println("\t\"flower\": {");
-                    pw.println(NAME_PAR_JSON + flowers[i].getName() + "\",");
-                    pw.println(COLOR_PAR_JSON + flowers[i].getColor() + "\",");
-                    pw.println(PRICE_PAR_JSON + flowers[i].getPrice() + "\"");
+                    pw.println(JSON_NAME_PAR + flowers[i].getName() + "\",");
+                    pw.println(JSON_COLOR_PAR + flowers[i].getColor() + "\",");
+                    pw.println(JSON_PRICE_PAR + flowers[i].getPrice() + "\"");
                     if (i == flowers.length - 1) {
                         pw.println("\t}");
                     } else {
@@ -62,18 +68,18 @@ public class RWText {
     public void read() {
         try {
             List<String> lines = Files.readAllLines(Paths.get(XML_FILE), StandardCharsets.UTF_8);
-            if (lines.size()>4) {
-                flowers = new Flower[lines.size() - 4];
+            if (lines.size()> XML_NUM_SERV_REC) {
+                flowers = new Flower[lines.size() - XML_NUM_SERV_REC];
             } else {
                 System.out.println("No data!");
                 return;
             }
             for(int i=0, j=0; i<lines.size(); i++){
                 String s = lines.get(i);
-                if(s.contains(NAME_PAR_XML)) {
-                    name = s.substring((s.indexOf(NAME_PAR_XML) + NAME_PAR_XML.length()), s.indexOf(COLOR_PAR_XML));
-                    color = s.substring((s.indexOf(COLOR_PAR_XML) + COLOR_PAR_XML.length()), s.indexOf(PRICE_PAR_XML));
-                    String p = s.substring((s.indexOf(PRICE_PAR_XML) + PRICE_PAR_XML.length()), s.indexOf("</price>"));
+                if(s.contains(XML_NAME_PAR)) {
+                    name = s.substring((s.indexOf(XML_NAME_PAR) + XML_NAME_PAR.length()), s.indexOf(XML_COLOR_PAR));
+                    color = s.substring((s.indexOf(XML_COLOR_PAR) + XML_COLOR_PAR.length()), s.indexOf(XML_PRICE_PAR));
+                    String p = s.substring((s.indexOf(XML_PRICE_PAR) + XML_PRICE_PAR.length()), s.indexOf(XML_PRICE_PAR_END));
                     price = Double.parseDouble(p);
                     flowers[j++] = new Flower(name, color, price);
                 }
@@ -93,7 +99,7 @@ public class RWText {
             try {
                 List<String> lines = Files.readAllLines(Paths.get(JSON_FILE), StandardCharsets.UTF_8);
                 for (String s: lines) {
-                    if(s.contains(NAME_PAR_JSON)) {
+                    if(s.contains(JSON_NAME_PAR)) {
                         countFlowers++;
                     }
                 }
@@ -104,14 +110,14 @@ public class RWText {
                 flowers = new Flower[countFlowers];
                 for(int i=0, j=0; i<lines.size(); i++) {
                     String s = lines.get(i);
-                    if(s.contains(NAME_PAR_JSON)) {
-                        name = s.substring(NAME_PAR_JSON.length(), s.length()-2);
+                    if(s.contains(JSON_NAME_PAR)) {
+                        name = s.substring(JSON_NAME_PAR.length(), s.length()-JSON_INDEX_DELTA);
                     }
-                    if(s.contains(COLOR_PAR_JSON)) {
-                        color = s.substring(COLOR_PAR_JSON.length(), s.length()-2);
+                    if(s.contains(JSON_COLOR_PAR)) {
+                        color = s.substring(JSON_COLOR_PAR.length(), s.length()-JSON_INDEX_DELTA);
                     }
-                    if(s.contains(PRICE_PAR_JSON)) {
-                        price = Double.parseDouble(s.substring(PRICE_PAR_JSON.length(), s.length()-1));
+                    if(s.contains(JSON_PRICE_PAR)) {
+                        price = Double.parseDouble(s.substring(JSON_PRICE_PAR.length(), s.length()-JSON_LAST_INDEX_DELTA));
                         flowers[j++] = new Flower(name, color, price);
                     }
                 }

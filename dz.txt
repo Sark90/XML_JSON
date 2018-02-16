@@ -9,4 +9,4 @@
 затем получаю java.io.StreamCorruptedException: invalid type code: AC.
 Специфика сериализации? Нужно всегда писать и читать "кучей"?
 
-- Модификаторы доступа transient и volatile
+//- Модификаторы доступа transient и volatile
